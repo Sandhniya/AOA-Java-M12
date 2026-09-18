@@ -1,6 +1,6 @@
 
 # EX 1C Job Sequencing using Greedy Approach
-## DATE:
+## DATE:15.09.26
 ## AIM:
 To write a Java program to for given constraints.
 Given an integer array nums and an integer k, return the number of pairs (i, j) where i < j such that |nums[i] - nums[j]| == k.
@@ -25,23 +25,85 @@ Only one job can be done at a time
 Your goal is to maximize total profit while completing the maximum number of jobs possible within their deadlines.
 
 ## Algorithm
-1. 
-2. 
-3. 
-4.  
-5.   
+Sort all jobs in descending order of profit to prioritize high-profit tasks.
+Find the maximum deadline and create an array of time-slots.
+For each job, check backwards from its deadline to find an empty slot.
+If a free slot exists, schedule the job and add its profit.
+Return the number of jobs completed and the total profit earned.
 
 ## Program:
 ```
 /*
 Program to implement Reverse a String
-Developed by: 
-Register Number:  
+Developed by: SANDHIYA SREE B
+Register Number: 212223220093 
 */
+```
+```
+import java.util.*;
+
+public class JobScheduling {
+
+    static class Job {
+        int id, deadline, profit;
+
+        Job(int id, int deadline, int profit) {
+            this.id = id;
+            this.deadline = deadline;
+            this.profit = profit;
+        }
+    }
+
+    public static int[] jobScheduling(Job[] jobs, int n) {
+
+        Arrays.sort(jobs,(a,b)-> Integer.compare(b.profit,a.profit));
+
+        int maxd=0;
+        for(Job job:jobs){
+            maxd=Math.max(maxd,job.deadline);
+        }
+
+        int[] slot = new int[maxd+1];
+        Arrays.fill(slot,-1);
+
+        int count=0;
+        int profit=0;
+
+        for(Job job:jobs){
+            for(int j=job.deadline;j>0;j--){
+                if(slot[j]==-1){
+                    slot[j]=job.id;
+                    count++;
+                    profit+=job.profit;
+                    break;
+                }
+            }
+        }
+
+        return new int[]{count,profit};
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Job[] jobs = new Job[n];
+
+        for (int i = 0; i < n; i++) {
+            int id = sc.nextInt();
+            int deadline = sc.nextInt();
+            int profit = sc.nextInt();
+            jobs[i] = new Job(id, deadline, profit);
+        }
+
+        int[] result = jobScheduling(jobs, n);
+        System.out.println(result[0] + " " + result[1]);
+    }
+}
 ```
 
 ## Output:
 
+<img width="363" height="435" alt="image" src="https://github.com/user-attachments/assets/e146c413-cac7-4787-b03f-025f21549915" />
 
 
 ## Result:
